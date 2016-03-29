@@ -50,6 +50,7 @@ string polishNotation(string &s)
 
 			mainStack.push(' ');
 		}else if(isOperator(s[i])){
+			//当操作符栈为空，或者栈顶的元素为')'，或者要压入的操作符的优先级大于等于栈顶操作符的优先级时
 			if(operatorStack.empty() || operatorStack.top() == ')' || priority(s[i]) >= operatorStack.top()){
 				operatorStack.push(s[i]);
 			}else{      //此处需要特别注意，可读性太差
@@ -61,7 +62,7 @@ string polishNotation(string &s)
 					mainStack.push(c);
 					mainStack.push(' ');
 				}*/
-
+				//否则就将操作符栈的操作符依次出栈，知道栈顶的元素的优先级大于等于要压入的操作符
 				while(!operatorStack.empty()){
 					if(priority(operatorStack.top()) > priority(s[i])){
 						char c = operatorStack.top();  operatorStack.pop();
@@ -72,7 +73,7 @@ string polishNotation(string &s)
 				}
 				operatorStack.push(s[i]);
 			}
-		}else if(s[i] == '('){
+		}else if(s[i] == '('){                 //遇到左括号，依次出栈，知道栈顶的元素为‘)’
 			while(operatorStack.top() != ')'){
 				char c = operatorStack.top();    operatorStack.pop();
 				mainStack.push(c);
